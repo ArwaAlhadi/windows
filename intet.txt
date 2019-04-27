@@ -1,0 +1,108 @@
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class inter2Activity extends AppCompatActivity {
+  TextView textView2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_inter2);
+
+        textView2=(TextView)findViewById(R.id.textView2);
+        textView2.setText(getIntent().getStringExtra("Name").toString());
+    }
+}
+
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class interactivityActivity extends AppCompatActivity {
+
+    Button Dialogbutton,Snackbarbutton,  Activitybutton,Toastbutton;
+    EditText  editText;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_interactivity);
+
+        Toastbutton = (Button) findViewById(R.id.Toastbutton);
+        Dialogbutton = (Button) findViewById(R.id.Dialogbutton);
+        Snackbarbutton = (Button) findViewById(R.id.Snackbarbutton);
+        Activitybutton = (Button) findViewById(R.id.Activitybutton);
+        editText = (EditText) findViewById(R.id.editText);
+
+        Toastbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String poundString = Toastbutton.getText().toString();
+                Toast.makeText(getApplicationContext(), "Toastbutton is:" + poundString, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        Snackbarbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String poundString = editText.getText().toString();
+                Snackbar.make(getCurrentFocus(), "Snackbarbutton is:" + poundString, Snackbar.LENGTH_LONG).show();
+
+            }
+
+        });
+
+
+        Activitybutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(interactivityActivity.this, inter2Activity.class);
+                intent.putExtra("Name", editText.getText().toString());
+                startActivityForResult(intent, 11);
+                editText.setText("");
+            }
+        });
+    }
+
+    public void  Dialogbutton (View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("welcom")
+                .setMessage("Are you sure you want to see Dialogbutton ?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+
+                        Toast.makeText(getApplicationContext(), "You have clicked yes button to proceed:", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        finish();
+                    }
+                })
+                .show();
+
+
+    }
+
+
+
+}
+
+
+
+
+
